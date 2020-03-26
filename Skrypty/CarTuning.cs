@@ -22,10 +22,13 @@ public class CarTuning : MonoBehaviour
     void Start()
     {  
         //Szukanie czy jakiś element jest aktywny
-        //Mesh Render musi być włączony
+        //zostawić tylko po jednym elemencie aktywnym, tak jak jest w taxi2.unitypackage
         for (int i = 0; i < FrontBumper.Length - 1; i++){
             if(FrontBumper[i].activeSelf){
                 FrontBumperId = i;
+            }
+            if( i >= FrontBumper.Length){
+                i = 0;
             }
         }    
         for (int i = 0; i < RearBumper.Length - 1; i++){
@@ -37,10 +40,16 @@ public class CarTuning : MonoBehaviour
             if(Engine[i].activeSelf){
                 EngineId = i;
             }
+            if( i >= Engine.Length){
+                i = 0;
+            }
         }
         for (int i = 0; i < Wheel.Length  - 1; i++){
             if(Wheel[i].activeSelf){
                 WheelId = i;
+            }
+            if( i >= Wheel.Length){
+                i = 0;
             }
         }
         //żeby nie niszczoło obiektu między scenami
@@ -53,22 +62,22 @@ public class CarTuning : MonoBehaviour
         //Sprawdzanie czy ma się obracać wraz z obliczeniem szybkości obrotu
         if(rotateCar)car.Rotate(Vector3.up * ( rotationSpeed * Time.deltaTime));
 
-        //szukanie przedniego zderzaka i włączanie go
+        //szukanie przedniego zderzaka
         for (int i = 0; i < FrontBumper.Length; i++){
             if(i != FrontBumperId) FrontBumper[i].SetActive(false);
             else FrontBumper[i].SetActive(true);
         }
-        //szukanie tylnego zderzaka i włączanie go
+        //szukanie tylnego zderzaka
         for (int i = 0; i < RearBumper.Length; i++){
             if(i != RearBumperId) RearBumper[i].SetActive(false);
             else RearBumper[i].SetActive(true);
         }
-        //szukanie Sinlika i włączanie go
+        //szukanie Sinlika
         for (int i = 0; i < Engine.Length; i++){
             if(i != EngineId) Engine[i].SetActive(false);
             else Engine[i].SetActive(true);
         }
-        //Szukanie typu koła i włączanie go
+        //Szukanie koła
         for (int i = 0; i < Wheel.Length; i+=4){
             if(i != WheelId){
                 for(int j = 0; j < 4; j++)
@@ -80,7 +89,6 @@ public class CarTuning : MonoBehaviour
             }
         }        
     }
-    //Trzeba stworzyć po przycisku na fukncje poniżej i daodać OnClick prefab samochodu
     //Zwiększenie indeksu Przedniego zderzaka
     public void AddFrontBumper(){
         if(FrontBumperId < FrontBumper.Length - 1) FrontBumperId++;
@@ -88,7 +96,7 @@ public class CarTuning : MonoBehaviour
     }
     //Zmniesznie indeksu Przedniego zderzaka
     public void TakeFrontBumper(){
-        FrontBumperId = (FrontBumperId + 1) % (FrontBumper.Length - 1);
+        FrontBumperId = (FrontBumperId + 1) % (FrontBumper.Length);
     }
     //Zwiększanie indeksu Tylnego zderzaka
     public void AddRearBumper(){
@@ -97,7 +105,7 @@ public class CarTuning : MonoBehaviour
     }
     //Zmniesznie indeksu Tylnego zderzaka
     public void TakeRearBumper(){
-        RearBumperId = (RearBumperId + 1) % (RearBumper.Length - 1);
+        RearBumperId = (RearBumperId + 1) % (RearBumper.Length);
     }
     //Zwiększanie indeksu Silnika
     public void AddEngine(){
@@ -106,10 +114,11 @@ public class CarTuning : MonoBehaviour
     }
     //Zmniesznie indeksu Silnika
     public void TakeEngine(){
-        EngineId = (EngineId + 1) % (Engine.Length - 1);
+        EngineId = (EngineId + 1) % (Engine.Length);
     }
     //Zwiększanie indeksu Koła
     public void AddWheel(){
+        Debug.Log("tak");
         if(WheelId < Wheel.Length - 4) WheelId+=4;
         else WheelId = 0; 
     }
