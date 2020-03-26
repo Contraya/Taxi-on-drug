@@ -8,75 +8,68 @@ public class CarTuning : MonoBehaviour
     public Transform car;
     public float rotationSpeed = 25.0f;
 
-    public GameObject[] FrontBumper;
-    public GameObject[] RearBumper;
-    public GameObject[] Engine;
-    public GameObject[] Wheel;
+    public GameObject[] FrontBumper; //tablica elementów
+    public GameObject[] RearBumper;//tablica elementów
+    public GameObject[] Engine;//tablica elementów
+    public GameObject[] Wheel;//tablica elementów (podajesz dla 3 kół różnych kół według wzoru 3 * 4)
 
-    public int FrontBumperId;
-    public int RearBumperId;
-    public int EngineId;
-    public int WheelId;
-    public bool rotateCar;
+    public int FrontBumperId;//Id wybranego zdrzaka
+    public int RearBumperId;//Id wybranego zdrzaka
+    public int EngineId;//Id wybranego Silnika
+    public int WheelId;//Id wybrane koła
+    public bool rotateCar;//czy ma się obracać, domyślnie tak
     // Start is called before the first frame update
     void Start()
-    {
-        for (int i = 0; i < FrontBumper.Length; i++){
+    {  
+        //Szukanie czy jakiś element jest aktywny
+        //Mesh Render musi być włączony
+        for (int i = 0; i < FrontBumper.Length - 1; i++){
             if(FrontBumper[i].activeSelf){
                 FrontBumperId = i;
             }
-            if( i >= FrontBumper.Length){
-                i = 0;
-            }
         }    
-        for (int i = 0; i < RearBumper.Length; i++){
+        for (int i = 0; i < RearBumper.Length - 1; i++){
             if(RearBumper[i].activeSelf){
                 RearBumperId = i;
             }
-            if( i >= RearBumper.Length){
-                i = 0;
-            }
         } 
-        for (int i = 0; i < Engine.Length; i++){
+        for (int i = 0; i < Engine.Length - 1; i++){
             if(Engine[i].activeSelf){
                 EngineId = i;
             }
-            if( i >= Engine.Length){
-                i = 0;
-            }
         }
-        for (int i = 0; i < Wheel.Length; i++){
+        for (int i = 0; i < Wheel.Length  - 1; i++){
             if(Wheel[i].activeSelf){
                 WheelId = i;
             }
-            if( i >= Wheel.Length){
-                i = 0;
-            }
-        } 
+        }
+        //żeby nie niszczoło obiektu między scenami
         DontDestroyOnLoad(car);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Sprawdzanie czy ma się obracać wraz z obliczeniem szybkości obrotu
         if(rotateCar)car.Rotate(Vector3.up * ( rotationSpeed * Time.deltaTime));
 
+        //szukanie przedniego zderzaka i włączanie go
         for (int i = 0; i < FrontBumper.Length; i++){
             if(i != FrontBumperId) FrontBumper[i].SetActive(false);
-            //else if( i >= FrontBumper.Length) i = 0;
             else FrontBumper[i].SetActive(true);
         }
+        //szukanie tylnego zderzaka i włączanie go
         for (int i = 0; i < RearBumper.Length; i++){
             if(i != RearBumperId) RearBumper[i].SetActive(false);
-            //else if( i >= RearBumper.Length) i = 0;
             else RearBumper[i].SetActive(true);
         }
+        //szukanie Sinlika i włączanie go
         for (int i = 0; i < Engine.Length; i++){
             if(i != EngineId) Engine[i].SetActive(false);
             else Engine[i].SetActive(true);
         }
+        //Szukanie typu koła i włączanie go
         for (int i = 0; i < Wheel.Length; i+=4){
-            //Debug.Log(i);
             if(i != WheelId){
                 for(int j = 0; j < 4; j++)
                     Wheel[i+j].SetActive(false);
@@ -87,6 +80,7 @@ public class CarTuning : MonoBehaviour
             }
         }        
     }
+    //Trzeba stworzyć po przycisku na fukncje poniżej i daodać OnClick prefab samochodu
     //Zwiększenie indeksu Przedniego zderzaka
     public void AddFrontBumper(){
         if(FrontBumperId < FrontBumper.Length - 1) FrontBumperId++;
@@ -123,6 +117,7 @@ public class CarTuning : MonoBehaviour
     public void TakeWheel(){
         WheelId = (WheelId + 4) % (Wheel.Length);
     }
+    //Zmiana statusu obrotu
     public void SetCarRotation(){
         rotateCar = !rotateCar;
     }
