@@ -17,9 +17,10 @@ public class CarController : MonoBehaviour
     public float accel{ get; private set; }
     private Rigidbody rb;
     public Text text; //tekst na ekranie (domyslnie predkosc, aktualny bieg i obroty silnika)
-
+    public bool breaking { get; private set; }
     void Start()
     {
+        breaking = false;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -56,11 +57,13 @@ public class CarController : MonoBehaviour
             for (int i = 0; i < 2; i++){
                 skid[i].PlayAudio();
                 StartCoroutine(skid[i].StartSkidTrail());
+                breaking = true;
             }
         } else if (br >= 0) {
             for (int i = 0; i < 2; i++){
                 skid[i].StopAudio();
                 skid[i].EndSkidTrail();
+                breaking = false;
             }
         }
     }
