@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class CarAudio : MonoBehaviour
 {
-    public AudioClip lowAccelClip;
-    public AudioClip lowDecelClip;
-    public AudioClip highAccelClip;
-    public AudioClip highDecelClip;
-    public float pitchMultiplier = 0.7f;
-    public float lowPitchMin = 1f;
-    public float lowPitchMax = 5f;
-    public float highPitchMultiplier = 0.25f;
-    public float dopplerLevel = 1;
-    public bool useDoppler = true;
+    public AudioClip lowAccelClip; //clip audio z dzwiekiem przyspieszania (niski)
+    public AudioClip lowDecelClip; //clip audio z dzwiekiem zwalniania (niski)
+    public AudioClip highAccelClip; //clip audio z dzwiekiem przyspieszania (wysoki)
+    public AudioClip highDecelClip; //clip audio z dzwiekiem zwalniania (wysoki)
+    public float pitchMultiplier = 0.7f; //wykorzystywany w zmianie wysokosci dzwieku audio clip'ow
+    public float lowPitchMin = 1f; //minimalna wysokosc dzwieku dla niskich dzwiekow
+    public float lowPitchMax = 5f; //maksymalna wysokosc dzwieku dla wysokich dzwiekow
+    public float highPitchMultiplier = 0.25f; //wykorzystywany do zmiany wysokosci dzwiekow wysokich
+    public float dopplerLevel = 1; //ilosc efektu dopplera wykorzystywanego w dzwieku
+    public bool useDoppler = true; //czy wykorzystywac efekt dopplera
 
-    private AudioSource LowAccel;
-    private AudioSource LowDecel;
-    private AudioSource HighAccel;
-    private AudioSource HighDecel;
-    private bool startedSound;
-    private CarController car;
+    private AudioSource LowAccel; //zrodlo dzwieku przyspieszania (niskiego)
+    private AudioSource LowDecel; //zrodlo dzwieku zwalniania (niskiego)
+    private AudioSource HighAccel; //zrodlo dzwieku przyspieszania (wysokiego)
+    private AudioSource HighDecel; //zrodlo dzwieku zwalniania (wysokiego)
+    private bool startedSound; //czy dzwiek jest odtwarzany
+    private CarController car; //klasa reprezentujaca samochod
 
     private void StartSound() {
         car = GetComponent<CarController>();
