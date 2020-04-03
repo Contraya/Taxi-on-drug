@@ -96,7 +96,7 @@ public class CarTuning : MonoBehaviour
     }
     //Zmniesznie indeksu Przedniego zderzaka
     public void TakeFrontBumper(){
-        FrontBumperId = (FrontBumperId + 1) % (FrontBumper.Length);
+        FrontBumperId = (FrontBumperId + FrontBumper.Length - 1) % (FrontBumper.Length);
     }
     //Zwiększanie indeksu Tylnego zderzaka
     public void AddRearBumper(){
@@ -105,7 +105,7 @@ public class CarTuning : MonoBehaviour
     }
     //Zmniesznie indeksu Tylnego zderzaka
     public void TakeRearBumper(){
-        RearBumperId = (RearBumperId + 1) % (RearBumper.Length);
+        RearBumperId = (RearBumperId + RearBumper.Length - 1) % (RearBumper.Length);
     }
     //Zwiększanie indeksu Silnika
     public void AddEngine(){
@@ -114,16 +114,17 @@ public class CarTuning : MonoBehaviour
     }
     //Zmniesznie indeksu Silnika
     public void TakeEngine(){
-        EngineId = (EngineId + 1) % (Engine.Length);
+        EngineId = (EngineId + Engine.Length - 1) % (Engine.Length);
     }
     //Zwiększanie indeksu Koła
     public void AddWheel(){
+        Debug.Log("tak");
         if(WheelId < Wheel.Length - 4) WheelId+=4;
         else WheelId = 0; 
     }
     //Zmaniesznie indeksu Koła
     public void TakeWheel(){
-        WheelId = (WheelId + 4) % (Wheel.Length);
+        WheelId = (WheelId + Wheel.Length - 4) % (Wheel.Length);
     }
     //Zmiana statusu obrotu
     public void SetCarRotation(){
