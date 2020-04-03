@@ -118,7 +118,6 @@ public class CarTuning : MonoBehaviour
     }
     //Zwiększanie indeksu Koła
     public void AddWheel(){
-        Debug.Log("tak");
         if(WheelId < Wheel.Length - 4) WheelId+=4;
         else WheelId = 0; 
     }
