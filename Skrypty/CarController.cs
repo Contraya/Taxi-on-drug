@@ -8,9 +8,10 @@ public class CarController : MonoBehaviour
     [SerializeField] private GameObject[] WheelMeshes = new GameObject[4];
     [SerializeField] private Skid[] skid = new Skid[2];
     [SerializeField] public float topSpeed = 200; //maksymalna predkosc samochodu
+    [SerializeField] public float speedDownLimit = 0;
     [SerializeField] public int noOfGears = 5; //ilosc biegow
     [SerializeField] private static float revsRange = 1f; //zakres obrotow silnika na jednym biegu (od 0)
-    public float currentSpeed {get {return rb.velocity.magnitude*3.6f; }}
+    public float currentSpeed {get {return rb.velocity.z*3.6f; }}
     private int gearNum = 0; //aktualny bieg
     private float gearFactor;
     public float revs { get; private set; } //obroty silnika
@@ -22,21 +23,22 @@ public class CarController : MonoBehaviour
     {
         breaking = false;
         rb = GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0, 0, speedDownLimit/3.6f);
     }
 
     void Update()
     {
-        text.text = "speed: " + currentSpeed.ToString() + "\ngear: " + (gearNum + 1).ToString() + "\nrevs: " + revs.ToString();
+        text.text = "speed: " + ((int)currentSpeed + 1).ToString() + "\ngear: " + (gearNum + 1).ToString() + "\nrevs: " + ((int)(revs*1000)).ToString();
         
     }
 
     public void Drive(float v, float b, float h, float vr, float hr) {
         accel = Mathf.Clamp(vr, 0, 1);
-        rb.AddForce(new Vector3(h, 0, 0));
+        rb.velocity = new Vector3(rb.velocity.x+h, 0, rb.velocity.z);
         if(h == 0) {
             rb.velocity = new Vector3(0, 0, rb.velocity.z);
         }
-        if(b < 0) {
+        if(b < 0 && rb.velocity.z * 3.6f > speedDownLimit + 1) {
             rb.AddForce(new Vector3(0, 0, b));
             rb.rotation = Quaternion.Euler(vr*2, 180+hr*3, hr*-5);
         } else if (b > 0) {
@@ -53,26 +55,29 @@ public class CarController : MonoBehaviour
     }
 
     private void Break(float br){
-        if(br < 0 && !skid[0].PlayingAudio) {
+        if(br < 0 && !skid[0].PlayingAudio && rb.velocity.z * 3.6f > speedDownLimit + 1) {
             for (int i = 0; i < 2; i++){
                 skid[i].PlayAudio();
-                StartCoroutine(skid[i].StartSkidTrail());
+                //StartCoroutine(skid[i].StartSkidTrail());
                 breaking = true;
             }
-        } else if (br >= 0) {
+        } else if (br >= 0 || rb.velocity.z * 3.6f <= speedDownLimit + 1) {
             for (int i = 0; i < 2; i++){
                 skid[i].StopAudio();
-                skid[i].EndSkidTrail();
+                //skid[i].EndSkidTrail();
                 breaking = false;
             }
         }
     }
 
     private void CapSpeed() {
-        float speed = rb.velocity.magnitude;
+        float speed = rb.velocity.z;
         speed *= 3.6f;
         if(speed > topSpeed){
             rb.velocity = (topSpeed/3.6f) * rb.velocity.normalized;
+        }
+        if(speed <= speedDownLimit ){
+            rb.velocity = new Vector3(rb.velocity.x, 0, speedDownLimit/3.6f);
         }
     }
 

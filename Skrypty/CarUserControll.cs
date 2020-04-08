@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CarUserControll : MonoBehaviour
 {
-    [SerializeField] public float acc = 2;
-    [SerializeField] public float steer = 1;
-    [SerializeField] public float breakPower = 10;
+    [SerializeField] public float acc = 1; //szybkosc przyspieszania samochodu
+    [SerializeField] public float steer = 2; //szybkosc skrecania samochodu na boki
+    [SerializeField] public float breakPower = 10; //sila hamowania
     private CarController car;
 
     private void Awake()
@@ -18,6 +18,6 @@ public class CarUserControll : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        car.Drive(v*(acc/10), v*breakPower*2000, h*steer*10000, v, h);
+        car.Drive(v*(acc/10), v*breakPower*2000, h*(steer/10), v, h);
     }
 }
