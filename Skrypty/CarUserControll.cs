@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CarUserControll : MonoBehaviour
 {
-    [SerializeField] public float acc = 1.5; //szybkosc przyspieszania samochodu
+    [SerializeField] public float acc = 1.5f; //szybkosc przyspieszania samochodu
     [SerializeField] public float steer = 2; //szybkosc skrecania samochodu na boki
     [SerializeField] public float breakPower = 10; //sila hamowania
     private CarController car;
