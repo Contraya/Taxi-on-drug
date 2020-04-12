@@ -18,18 +18,25 @@ public class CarController : MonoBehaviour
     public float accel{ get; private set; }
     private Rigidbody rb;
     public Text text; //tekst na ekranie (domyslnie predkosc, aktualny bieg i obroty silnika)
+    public Text distance;
     public bool breaking { get; private set; }
+    float distanceTravelled = 0;
+    Vector3 lastPosition;
+
     void Start()
     {
         breaking = false;
         rb = GetComponent<Rigidbody>();
         rb.velocity = new Vector3(0, 0, speedDownLimit/3.6f);
+        lastPosition = transform.position;
     }
 
     void Update()
     {
         text.text = "speed: " + ((int)currentSpeed + 1).ToString() + "\ngear: " + (gearNum + 1).ToString() + "\nrevs: " + ((int)(revs*1000)).ToString();
-        
+        distanceTravelled += Vector3.Distance(transform.position, lastPosition);
+        distance.text = "Distance: " + (distanceTravelled / 1000 ).ToString("f2") + " KM";
+        lastPosition = transform.position;
     }
 
     public void Drive(float v, float b, float h, float vr, float hr) {
