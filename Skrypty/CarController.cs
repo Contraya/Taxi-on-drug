@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class CarController : MonoBehaviour
 {
-    [SerializeField] private GameObject[] WheelMeshes = new GameObject[4];
+    [SerializeField] private GameObject[] WheelMeshes = new GameObject[2];
     [SerializeField] private Skid[] skid = new Skid[2];
     [SerializeField] public float topSpeed = 200; //maksymalna predkosc samochodu
     [SerializeField] public float speedDownLimit = 0;
@@ -22,6 +24,10 @@ public class CarController : MonoBehaviour
     public bool breaking { get; private set; }
     float distanceTravelled = 0;
     Vector3 lastPosition;
+    private CashManager cashManager;
+    private int cash = 0;
+
+    bool loaded = false;
 
     void Start()
     {
@@ -33,7 +39,16 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
-        text.text = "speed: " + ((int)currentSpeed + 1).ToString() + "\ngear: " + (gearNum + 1).ToString() + "\nrevs: " + ((int)(revs*1000)).ToString();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "Game" && loaded is false)
+        {
+            text = GameObject.Find("Text").GetComponent<Text>();
+            distance = GameObject.Find("DistanceText").GetComponent<Text>();
+            loaded = true;
+            cashManager = GameObject.Find("CashManager").GetComponent<CashManager>();
+        }
+        
+        text.text = "speed: " + ((int)currentSpeed + 1).ToString() + "\ngear: " + (gearNum + 1).ToString() + "\nrevs: " + ((int)(revs*1000)).ToString() + "\ncash: " + cash.ToString() + " $";
         distanceTravelled += Vector3.Distance(transform.position, lastPosition);
         distance.text = "Distance: " + (distanceTravelled / 1000 ).ToString("f2") + " KM";
         lastPosition = transform.position;
@@ -130,4 +145,11 @@ public class CarController : MonoBehaviour
     private static float CurveFactor(float factor) {
             return 1 - (1 - factor)*(1 - factor);
         }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Cash")){
+            cash += 100;
+            cashManager.DeleteCash();
+        }
+    }
 }
