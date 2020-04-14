@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CashManager : MonoBehaviour
 {
+    
     public GameObject cashPrefab;
     private Transform playerTransform;
     private List<GameObject> activeCash;
