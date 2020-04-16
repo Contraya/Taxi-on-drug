@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class CarController : MonoBehaviour
 {
+    public Rigidbody rb;
     [SerializeField] private GameObject[] WheelMeshes = new GameObject[2];
     [SerializeField] private Skid[] skid = new Skid[2];
     [SerializeField] public float topSpeed = 200; //maksymalna predkosc samochodu
@@ -18,16 +19,20 @@ public class CarController : MonoBehaviour
     private float gearFactor;
     public float revs { get; private set; } //obroty silnika
     public float accel{ get; private set; }
-    private Rigidbody rb;
+    
     public Text text; //tekst na ekranie (domyslnie predkosc, aktualny bieg i obroty silnika)
     public Text distance;
     public bool breaking { get; private set; }
-    float distanceTravelled = 0;
+    public float distanceTravelled = 0;
     Vector3 lastPosition;
-    private CashManager cashManager;
-    private int cash = 0;
+    public CashManager cashManager;
+    public float cash = 0;
+    public bool Travel = false;
 
-    bool loaded = false;
+    public bool pivot = true;
+    public float goalDistance;
+    public float ClinetCash;
+    public string ClientName;
 
     void Start()
     {
@@ -38,20 +43,20 @@ public class CarController : MonoBehaviour
     }
 
     void Update()
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "Game" && loaded is false)
-        {
-            text = GameObject.Find("Text").GetComponent<Text>();
-            distance = GameObject.Find("DistanceText").GetComponent<Text>();
-            loaded = true;
-            cashManager = GameObject.Find("CashManager").GetComponent<CashManager>();
-        }
-        
+    {       
         text.text = "speed: " + ((int)currentSpeed + 1).ToString() + "\ngear: " + (gearNum + 1).ToString() + "\nrevs: " + ((int)(revs*1000)).ToString() + "\ncash: " + cash.ToString() + " $";
         distanceTravelled += Vector3.Distance(transform.position, lastPosition);
         distance.text = "Distance: " + (distanceTravelled / 1000 ).ToString("f2") + " KM";
         lastPosition = transform.position;
+        if(distanceTravelled >= goalDistance && pivot){
+            distanceTravelled = 0;
+            rb.velocity =  new Vector3(0, 0.5f, 0);
+            //Debug.Log(distanceTravelled);
+            cash += ClinetCash;
+            Travel = true;
+            pivot = false; 
+            SceneManager.LoadScene("GoodTravel");
+        }
     }
 
     public void Drive(float v, float b, float h, float vr, float hr) {
@@ -145,11 +150,11 @@ public class CarController : MonoBehaviour
     private static float CurveFactor(float factor) {
             return 1 - (1 - factor)*(1 - factor);
         }
-
+    //fukncja usuwania pieniedzy i dodawania
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Cash")){
-            cash += 100;
+            cash += 100.0f;
             cashManager.DeleteCash();
         }
-    }
+    }    
 }

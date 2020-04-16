@@ -34,7 +34,7 @@ public class CarAudio : MonoBehaviour
     }
 
 
-    private void StopSound() {
+    public void StopSound() {
         foreach (var source in GetComponents<AudioSource>()) {
             Destroy(source);
         }
