@@ -1,0 +1,39 @@
+﻿<Properties StartupConfiguration="{B2B58FB2-4462-6B0C-A872-40DD957E5FE0}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Vehicles/Car/Scripts/CarAIControl.cs">
+    <Files>
+      <File FileName="Assets/Skrypty/CarUserControll.cs" Line="24" Column="1" />
+      <File FileName="Assets/Standard Assets/Vehicles/Car/Scripts/Mudguard.cs" Line="24" Column="1" />
+      <File FileName="Assets/Standard Assets/Vehicles/Car/Scripts/CarAIControl.cs" Line="67" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="New Unity Project" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True" />
+              <Node name="Standard Assets" expanded="True">
+                <Node name="2D" expanded="True">
+                  <Node name="Scripts" expanded="True" />
+                </Node>
+                <Node name="Vehicles" expanded="True">
+                  <Node name="Car" expanded="True">
+                    <Node name="Scripts" expanded="True">
+                      <Node name="CarAIControl.cs" selected="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5e971f8d-4ec2-4607-873d-fe05ca98d830" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

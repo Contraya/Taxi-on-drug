@@ -1,0 +1,37 @@
+﻿<Properties StartupConfiguration="{D51DBFA1-EA56-AAD3-3091-664BCCBB9AFB}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Standard Assets/Vehicles/Car/Scripts/CarController.cs">
+    <Files>
+      <File FileName="Assets/SampleScenes/Scripts/ParticleSceneControls.cs" Line="6" Column="1" />
+      <File FileName="Assets/Standard Assets/Vehicles/Car/Scripts/CarController.cs" Line="33" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="main" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="SampleScenes" expanded="True">
+                <Node name="Scripts" expanded="True" />
+              </Node>
+              <Node name="Standard Assets" expanded="True">
+                <Node name="Vehicles" expanded="True">
+                  <Node name="Car" expanded="True">
+                    <Node name="Scripts" expanded="True">
+                      <Node name="CarController.cs" selected="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="332af8b0-ece0-4b4f-a5e3-9f8cbd6f4cd2" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
