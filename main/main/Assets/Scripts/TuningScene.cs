@@ -120,6 +120,8 @@ public class TuningScene : MonoBehaviour
             Alert.color = Color.green;
             Alert.text = "You bought ✔";
             cash -= cost;
+            Car.GetComponent<CarController>().cash = cash;
+            Cash.text = "Cash : \t" + cash.ToString();
             Car.GetComponent<CarTuning>().UpdateOnce();
             ClickUpdate();
         }else{
