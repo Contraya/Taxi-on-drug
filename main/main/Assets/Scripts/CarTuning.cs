@@ -78,7 +78,7 @@ public class CarTuning : MonoBehaviour
         //Sprawdzanie czy ma się obracać wraz z obliczeniem szybkości obrotu
         if(rotateCar)car.Rotate(Vector3.up * ( rotationSpeed * Time.deltaTime));
 
-        //szukanie przedniego zderzaka
+        /*//szukanie przedniego zderzaka
         for (int i = 0; i < FrontBumper.Length; i++){
             if(i != FrontBumperId) FrontBumper[i].SetActive(false);
             else FrontBumper[i].SetActive(true);
@@ -103,43 +103,51 @@ public class CarTuning : MonoBehaviour
                 for(int j = 0; j < 4; j++)
                     Wheel[i+j].SetActive(true);
             }
-        }        
+        }    */    
     }
     //Zwiększenie indeksu Przedniego zderzaka
     public void AddFrontBumper(){
         if(FrontBumperId < FrontBumper.Length - 1) FrontBumperId++;
         else FrontBumperId = 0;
+        UpdateOnce();
     }
     //Zmniesznie indeksu Przedniego zderzaka
     public void TakeFrontBumper(){
         FrontBumperId = (FrontBumperId + (FrontBumper.Length - 1)) % (FrontBumper.Length);
+        UpdateOnce();
     }
     //Zwiększanie indeksu Tylnego zderzaka
     public void AddRearBumper(){
         if(RearBumperId < FrontBumper.Length - 1) RearBumperId++;
         else RearBumperId = 0;
+        UpdateOnce();
     }
     //Zmniesznie indeksu Tylnego zderzaka
     public void TakeRearBumper(){
         RearBumperId = (RearBumperId + (RearBumper.Length - 1)) % (RearBumper.Length);
+        UpdateOnce();
     }
     //Zwiększanie indeksu Silnika
     public void AddEngine(){
         if(EngineId < Engine.Length - 1) EngineId++;
         else EngineId = 0;
+        UpdateOnce();
     }
     //Zmniesznie indeksu Silnika
     public void TakeEngine(){
         EngineId = (EngineId + (Engine.Length - 1)) % (Engine.Length);
+        UpdateOnce();
     }
     //Zwiększanie indeksu Koła
     public void AddWheel(){
         if(WheelId < Wheel.Length - 4) WheelId+=4;
         else WheelId = 0; 
+        UpdateOnce();
     }
     //Zmaniesznie indeksu Koła
     public void TakeWheel(){
         WheelId = (WheelId + Wheel.Length - 4) % (Wheel.Length);
+        UpdateOnce();
     }
     //Zmiana statusu obrotu
     public void SetCarRotation(){
