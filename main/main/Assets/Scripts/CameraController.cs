@@ -10,7 +10,7 @@ public class CameraController : MonoBehaviour
 
     private void Start() {
         car = GameObject.FindGameObjectWithTag("Player");
-        offset  = new Vector3(0,3,-4) - new Vector3(0,0.5f,0);
+        offset  = new Vector3(0,6,-6) - new Vector3(0,0.5f,0);
         transform.rotation = Quaternion.Euler(31f, 0, 0);
     }
     void LateUpdate()
