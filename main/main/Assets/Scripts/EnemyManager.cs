@@ -21,14 +21,18 @@ public class EnemyManager : MonoBehaviour
             activeEnemies[i] = new List<GameObject>();
         }
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        spawnZ = Random.Range(20, 30);
+        spawnZ = Random.Range(7, 10);
+        SpawnEnemy();
+        spawnZ += Random.Range(20, 30);
+        SpawnEnemy();
+        spawnZ += Random.Range(20, 30);
         SpawnEnemy();
     }
 
     void Update()
     {
-        // modele pojawiaja sie w randomowej odlegosci z zakresu od 140 do 170 jednostek od gracza
-        spawnZ = playerTransform.position.z + (int)Random.Range(140, 170);
+        // modele pojawiaja sie w randomowej odlegosci z zakresu od 300 do 400 jednostek od gracza
+        spawnZ = playerTransform.position.z + (int)Random.Range(300, 400);
         // liczba modeli na scenie jest ograniczona, pojawiaja sie one w randomowym odstepie czasowym od 2 do 4 sekund
         if (Time.time >= previousTime + time && activeEnemiesCount <= 7)
         {
@@ -46,7 +50,7 @@ public class EnemyManager : MonoBehaviour
                 {
                     DeleteEnemy(activeEnemies[i][j], i);
                 }
-                else if (playerTransform.position.z + 300f < (activeEnemies[i][j].transform.position.z))
+                else if (playerTransform.position.z + 500f < (activeEnemies[i][j].transform.position.z))
                 {
                     DeleteEnemy(activeEnemies[i][j], i);
                 }
