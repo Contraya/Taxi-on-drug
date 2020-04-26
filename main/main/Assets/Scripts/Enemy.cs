@@ -28,36 +28,27 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         // jeśli na torze jest tylko jeden model jego prędkość jest stała, jeśli jest więcej jego prędkość zależy od innych modeli
-        if (myTrack.Count <= 1)
-        {
-            rb.velocity = rb.velocity.normalized * speed;
-        }
-        else
-        {
-            rb.velocity = CapSpeed();
-        }
+        speed = CapSpeed();
+        rb.velocity = rb.velocity.normalized * speed;
     }
 
-    // jeśli model zostanie zepchnięty z toru przez gracza, po pewnym czasie zaczyna na niego wracać
-    private void LateUpdate()
+    // jeśli model zostanie uderzony przez gracza będzie starał się utrzymac swój pasu ruchu
+    void FixedUpdate()
     {
-        Vector3 target = new Vector3(track, transform.position.y, transform.position.z);
-        Vector3 toTarget = target - transform.position;
-        if (toTarget.magnitude > 0.15f)
-        {
-            transform.Translate(toTarget.normalized * 1.5f * Time.deltaTime);
-        }
+        Vector3 target = new Vector3(track, rb.position.y, rb.position.z);
+        Vector3 toTarget = target - rb.position;
+        rb.MovePosition(target);
     }
 
     // funkcja odpowiedzialna za eliminację zderzeń modeli na torzem
-    // jesli model dogoni inny model znajdujący się przed nim i odległość między nimi wynosi 10 jednostek, jego prędkość jest równa prędkości modelu z przodu
-    private Vector3 CapSpeed()
+    // jesli model dogoni inny model znajdujący się przed nim i odległość między nimi wynosi 7 jednostek, jego prędkość jest równa prędkości modelu z przodu
+    private float CapSpeed()
     {
         int enemyInFront = myTrack.IndexOf(this.gameObject);
         for (int i = 0; i < myTrack.Count; i++)
         {
-            if(myTrack[i].transform.position.z - transform.position.z < 0) continue;
-            if (transform.position.z + 10f >= myTrack[i].transform.position.z)
+            if (myTrack[i].transform.position.z - transform.position.z <= 0) continue;
+            if (transform.position.z + 7f >= myTrack[i].transform.position.z)
             {
                 enemyInFront = i;
                 break;
@@ -65,11 +56,11 @@ public class Enemy : MonoBehaviour
         }
         if (enemyInFront != myTrack.IndexOf(this.gameObject))
         {
-            return rb.velocity.normalized * myTrack[enemyInFront].GetComponent<Enemy>().speed;
+            return myTrack[enemyInFront].GetComponent<Enemy>().speed;
         }
         else
         {
-            return (rb.velocity.normalized * speed);
+            return speed;
         }
     }
 }
