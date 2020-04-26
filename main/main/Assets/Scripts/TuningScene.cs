@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TuningScene : MonoBehaviour
 {
-    private GameObject Car, Wrota, Position;
+    private GameObject Car, Wrota, Position, caly;
     private Text Cash;
     private Text Cost;
     private Text Alert;
@@ -20,6 +20,7 @@ public class TuningScene : MonoBehaviour
         Position = GameObject.Find("Garazv2");
         Wrota = GameObject.Find("Wrota");
         Car = GameObject.FindGameObjectWithTag("Player");
+        caly = GameObject.Find("Canvas");
         //Position.transform.position = Car.transform.position;
         Car.GetComponent<CarTuning>().rotateCar = true;
         cash = Car.GetComponent<CarController>().cash;
@@ -106,7 +107,7 @@ public class TuningScene : MonoBehaviour
     
     public void toGame()
     {
-         Wrota.GetComponent<WyjazdGaraz>().SetOpen();
+        Wrota.GetComponent<WyjazdGaraz>().SetOpen();
         Car.GetComponent<CarTuning>().FrontBumperId = FBO;
         Car.GetComponent<CarTuning>().RearBumperId = RBO;
         Car.GetComponent<CarTuning>().WheelId = WO;
@@ -120,6 +121,7 @@ public class TuningScene : MonoBehaviour
         Car.transform.Rotate(0,-190,0);
         Car.GetComponent<CarTuning>().UpdateOnce();
         Car.GetComponent<CarTuning>().enabled = false;
+        caly.GetComponent<Canvas> ().enabled = false;
         Alert.enabled = false;
        
     }
