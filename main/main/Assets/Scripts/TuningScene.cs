@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TuningScene : MonoBehaviour
 {
-    public GameObject Position;
-    private GameObject Car;
+    private GameObject Car, Wrota, Position;
     private Text Cash;
     private Text Cost;
     private Text Alert;
@@ -15,10 +14,13 @@ public class TuningScene : MonoBehaviour
     float cash = 0;
     private float FB,RB,E,W;
     private int FBO,RBO,EO,WO;
+
     void Start()
     {
+        Position = GameObject.Find("Garazv2");
+        Wrota = GameObject.Find("Wrota");
         Car = GameObject.FindGameObjectWithTag("Player");
-        Position.transform.position = Car.transform.position;
+        //Position.transform.position = Car.transform.position;
         Car.GetComponent<CarTuning>().rotateCar = true;
         cash = Car.GetComponent<CarController>().cash;
         FBO = Car.GetComponent<CarTuning>().FrontBumperId;
@@ -30,9 +32,17 @@ public class TuningScene : MonoBehaviour
         Alert = GameObject.Find("Alert").GetComponent<Text>();
         Cash.text = "Cash : \t" + cash.ToString();
         Cost.text = "Cost : \t" + cost.ToString();
+        Alert.enabled = false;
         /*Button btn1 = FB2.GetComponent<Button>();
         btn.onClick.AddListener(Car.GetComponent<CarTuning>().TakeFrontBumper);
         */       
+    }
+    private void Update() {
+        if(Wrota.GetComponent<WyjazdGaraz>().GetKoniec()){
+            Car.transform.Rotate(0,0,0);
+            Car.transform.position = new Vector3(0,0.5f,0);
+            SceneManager.LoadScene("Clients");
+        };
     }
     private void ClickUpdate() {
         if(Car.GetComponent<CarTuning>().FrontBumperId == FBO) FB = 0;
@@ -96,6 +106,7 @@ public class TuningScene : MonoBehaviour
     
     public void toGame()
     {
+         Wrota.GetComponent<WyjazdGaraz>().SetOpen();
         Car.GetComponent<CarTuning>().FrontBumperId = FBO;
         Car.GetComponent<CarTuning>().RearBumperId = RBO;
         Car.GetComponent<CarTuning>().WheelId = WO;
@@ -106,9 +117,11 @@ public class TuningScene : MonoBehaviour
         Car.GetComponent<CarAudio>().enabled = false;
         Car.GetComponent<CarTuning>().rotateCar = false;
         Car.transform.Rotate(0,0,0);
+        Car.transform.Rotate(0,-190,0);
         Car.GetComponent<CarTuning>().UpdateOnce();
         Car.GetComponent<CarTuning>().enabled = false;
-        SceneManager.LoadScene("Clients");
+        Alert.enabled = false;
+       
     }
     public void Buy(){
         if(cost <= cash){

@@ -71,6 +71,7 @@
      <Compile Include="Assets\Scripts\SkidTrail.cs" />
      <Compile Include="Assets\Scripts\TileManager.cs" />
      <Compile Include="Assets\Scripts\TuningScene.cs" />
+     <Compile Include="Assets\Scripts\WyjazdGaraz.cs" />
      <Compile Include="Assets\Speedometer\Speedometer.cs" />
      <None Include="Assets\Clients.txt" />
  <Reference Include="Unity.TextMeshPro.Editor">
