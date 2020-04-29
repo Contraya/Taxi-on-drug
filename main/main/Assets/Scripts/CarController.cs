@@ -27,6 +27,9 @@ public class CarController : MonoBehaviour
     public float distanceTravelled = 0;
     public Vector3 lastPosition;
     public CashManager cashManager;
+    public int x2Cash = 1;
+    public float timer = 0.0f;
+    public float isPicked = 0.0f;
     public float cash = 0;
     public bool Travel = false;
 
@@ -37,6 +40,8 @@ public class CarController : MonoBehaviour
     public HealthBar healthBar;
     public int health;
     public EnemyManager enemyManager;
+
+    public PillManager pillManager;
 
     void Start()
     {
@@ -58,10 +63,11 @@ public class CarController : MonoBehaviour
         {
             distanceTravelled = 0;
             rb.velocity = new Vector3(0, 0.5f, 0);
-            //Debug.Log(distanceTravelled);
             cash += ClinetCash;
             Travel = true;
             pivot = false;
+            x2Cash = 1;
+            isPicked = 0.0f;
             transform.position = new Vector3(0, transform.position.y, 0);
             SceneManager.LoadScene("GoodTravel");
         }
@@ -70,9 +76,18 @@ public class CarController : MonoBehaviour
             distanceTravelled = 0;
             rb.velocity = new Vector3(0, 0.5f, 0);
             pivot = false;
+            x2Cash = 1;
+            isPicked = 0.0f;
             transform.position = new Vector3(0, transform.position.y, 0);
             SceneManager.LoadScene("GoodTravel");
         }
+
+        if (isPicked != 0.0f & (int) timer - isPicked >= 15)
+        {
+            x2Cash = 1;
+            isPicked = 0.0f;
+        }
+        timer += Time.deltaTime;
     }
 
     public void Drive(float v, float b, float h, float vr, float hr)
@@ -192,13 +207,19 @@ public class CarController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Cash"))
         {
-            cash += 100.0f;
+            cash += 100.0f * x2Cash;
             cashManager.DeleteCash();
         }
         else if (other.gameObject.CompareTag("Coin"))
         {
-            cash += 50.0f;
+            cash += 50.0f * x2Cash;
             cashManager.DeleteCash();
+        }
+        else if (other.gameObject.CompareTag("Pill"))
+        {
+            isPicked = timer;
+            x2Cash = 5;
+            pillManager.DeletePill();
         }
         else if (other.gameObject.CompareTag("Barrier"))
         {

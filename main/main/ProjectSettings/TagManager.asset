@@ -8,6 +8,7 @@ TagManager:
   - Coin
   - Barrier
   - Enemy
+  - Pill
   layers:
   - Default
   - TransparentFX

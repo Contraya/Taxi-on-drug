@@ -16,6 +16,7 @@ public class GameScene : MonoBehaviour
         car.GetComponent<CarController>().healthBar = GameObject.Find("HealthBar").GetComponent<HealthBar>();
         car.GetComponent<CarController>().enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
         car.GetComponent<CarController>().healthBar.setMaxValue(car.GetComponent<CarController>().maxHealth);
+        car.GetComponent<CarController>().pillManager = GameObject.Find("PillManager").GetComponent<PillManager>();
         car.GetComponent<CarController>().health = car.GetComponent<CarController>().maxHealth;
     }
 }
