@@ -23,6 +23,9 @@ public class CarController : MonoBehaviour
 
     public Text text; //tekst na ekranie (domyslnie predkosc, aktualny bieg i obroty silnika)
     public Text distance;
+    public float time_left;
+    public GameObject stoper;
+    public bool stoper_loaded = false;
     public bool breaking { get; private set; }
     public float distanceTravelled = 0;
     public Vector3 lastPosition;
@@ -59,6 +62,7 @@ public class CarController : MonoBehaviour
         distanceTravelled += Vector3.Distance(transform.position, lastPosition);
         distance.text = "Distance: " + (distanceTravelled / 1000).ToString("f2") + " KM";
         lastPosition = transform.position;
+
         if (distanceTravelled >= goalDistance && pivot)
         {
             distanceTravelled = 0;
@@ -69,8 +73,10 @@ public class CarController : MonoBehaviour
             x2Cash = 1;
             isPicked = 0.0f;
             transform.position = new Vector3(0, transform.position.y, 0);
+            stoper.SetActive(false);
             SceneManager.LoadScene("GoodTravel");
         }
+
         if (health == 0)
         {
             distanceTravelled = 0;
@@ -79,6 +85,7 @@ public class CarController : MonoBehaviour
             x2Cash = 1;
             isPicked = 0.0f;
             transform.position = new Vector3(0, transform.position.y, 0);
+            stoper.SetActive(false);
             SceneManager.LoadScene("GoodTravel");
         }
 
@@ -86,7 +93,15 @@ public class CarController : MonoBehaviour
         {
             x2Cash = 1;
             isPicked = 0.0f;
+            stoper.SetActive(false);
         }
+
+        if (stoper.activeSelf)
+        {
+            stoper.transform.Find("seconds").GetComponent<Text>().text = (Mathf.Ceil(time_left - Time.deltaTime)).ToString();
+            time_left -= Time.deltaTime;
+        }
+
         timer += Time.deltaTime;
     }
 
@@ -220,6 +235,8 @@ public class CarController : MonoBehaviour
             isPicked = timer;
             x2Cash = 5;
             pillManager.DeletePill();
+            stoper.SetActive(true);
+            time_left = 15.0f;
         }
         else if (other.gameObject.CompareTag("Barrier"))
         {

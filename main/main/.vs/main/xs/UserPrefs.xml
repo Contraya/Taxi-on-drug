@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{D51DBFA1-EA56-AAD3-3091-664BCCBB9AFB}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CarController.cs">
     <Files>
-      <File FileName="Assets/PillManager.cs" Line="38" Column="5" />
-      <File FileName="Assets/Scripts/CarController.cs" Line="82" Column="50" />
+      <File FileName="Assets/Scripts/CarController.cs" Line="106" Column="6" />
+      <File FileName="Assets/Scripts/GameScene.cs" Line="25" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -28,7 +28,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="05a4d7a5-20e8-4bd1-9c38-e5816f4aa5df" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="62162c23-44cc-4dd3-b0ee-b944e232421f" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
