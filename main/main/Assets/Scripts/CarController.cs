@@ -89,7 +89,7 @@ public class CarController : MonoBehaviour
             SceneManager.LoadScene("GoodTravel");
         }
 
-        if (isPicked != 0.0f & (int) timer - isPicked >= 15)
+        if (isPicked != 0.0f & (int)timer - isPicked >= 15)
         {
             x2Cash = 1;
             isPicked = 0.0f;
@@ -251,5 +251,17 @@ public class CarController : MonoBehaviour
             health -= 5;
             healthBar.setHealth(health);
         }
+    }
+
+    public Save createSaveGame()
+    {
+        Save save = new Save();
+        save.cash = cash;
+        save.frontBumper = GameObject.FindGameObjectWithTag("Player").GetComponent<CarTuning>().FrontBumperId;
+        save.rearBumber = GameObject.FindGameObjectWithTag("Player").GetComponent<CarTuning>().RearBumperId;
+        save.wheels = GameObject.FindGameObjectWithTag("Player").GetComponent<CarTuning>().WheelId;
+        save.engine = GameObject.FindGameObjectWithTag("Player").GetComponent<CarTuning>().EngineId;
+
+        return save;
     }
 }
